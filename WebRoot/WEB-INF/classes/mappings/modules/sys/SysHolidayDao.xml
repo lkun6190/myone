@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.SysHolidayDao">
+    
+	<sql id="sysHolidayColumns">
+		a.hid AS "hid",
+		a.hyear AS "hyear",
+		a.hmonth AS "hmonth",
+		a.hday AS "hday",
+		a.hdate AS "hdate",
+		a.htype AS "htype"
+	</sql>
+	
+	<sql id="sysHolidayJoins">
+	</sql>
+    
+	<select id="get" resultType="SysHoliday">
+		SELECT 
+			<include refid="sysHolidayColumns"/>
+		FROM sys_holiday a
+		<include refid="sysHolidayJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SysHoliday">
+		SELECT 
+			<include refid="sysHolidayColumns"/>
+		FROM sys_holiday a
+		<include refid="sysHolidayJoins"/>
+		<where>
+			1=1
+			<if test="htype != null and htype != ''">
+				AND a.htype =#{htype}
+			</if>
+			<if test="hmonth != null and hmonth != ''">
+				AND a.hmonth =#{hmonth} 
+			</if>
+			<if test="hyear != null and hyear != ''">
+				AND a.hyear =#{hyear} 
+			</if>
+			<if test="hdate != null and hdate != ''">
+				AND a.hdate =#{hdate} 
+			</if>
+			<if test="beginDate != null and beginDate != ''">
+				AND a.hdate &gt;=#{beginDate} 
+			</if>
+			<if test="endDate != null and endDate != ''">
+				AND a.hdate &lt;=#{endDate} 
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SysHoliday">
+		SELECT 
+			<include refid="sysHolidayColumns"/>
+		FROM sys_holiday a
+		<include refid="sysHolidayJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO sys_holiday(
+			hid,
+			hyear,
+			hmonth,
+			hday,
+			hdate,
+			htype
+		) VALUES (
+			#{hid},
+			#{hyear},
+			#{hmonth},
+			#{hday},
+			#{hdate},
+			#{htype}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE sys_holiday SET 	
+			hid = #{hid},
+			hyear = #{hyear},
+			hmonth = #{hmonth},
+			hday = #{hday},
+			hdate = #{hdate},
+			htype = #{htype}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM sys_holiday
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

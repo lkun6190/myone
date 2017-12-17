@@ -1,0 +1,135 @@
+
+    body
+    {
+        background:#f6f6f6;
+        overflow-x:hidden;
+    }
+     .top
+    {
+        text-align:center;
+        height:3em;
+        line-height:3em;
+        background:url(img/apptop.png);
+        background-size:100%;
+    }
+    /*.projna
+    {
+            margin-top:3em;
+    }*/
+
+    .query
+    {
+        border-top-left-radius:0.2em;
+        border-bottom-left-radius:0.2em;
+        margin-top:0.5em;
+        border: 1px solid #e6e6e6;
+        height: 2em;
+        width: 52%;
+        float:left;
+        font-size: 1em;
+        background:#f6f6f6;
+    }
+    .chek .shuo
+    {
+        border-top-right-radius:0.2em;
+        border-bottom-right-radius:0.2em;
+        margin-top: 0.5em;
+        display: block;
+        width: 16%;
+         height: 2em;
+         overflow:hidden;
+        float: left;
+        margin-right: 1.5em;
+        border-top:1px solid #e6e6e6;
+        border-right:1px solid #e6e6e6;
+        border-bottom:1px solid #e6e6e6;
+    }
+    .chek span
+    {
+        float:left;
+        padding: 0.75em;
+    }
+    input:focus
+    {
+        outline: 1px solid #54aafc;
+    }
+    .chek
+    {
+        display:block;
+        overflow:hidden;
+        background:#ffffff;
+    }
+    .chek .shuo img
+    {
+        height: 80%;
+        padding-top:5%;
+        margin:0 auto;
+    }
+        .top .return
+    {
+        position: absolute;
+        display:block;
+        overflow:hidden;
+        height:1.5em;
+        margin-top:0.75em;
+        padding-left:1em;
+    }
+    .top a img
+    {
+        height:100%;
+    }
+    a:hover
+    {
+        color:#54aafc;
+    }
+    .lable .list
+    {
+     
+       background:#ffffff;
+    }
+    .lable .li
+    {
+   
+     margin-top:1em;
+    display:block;
+    overflow:hidden;
+    width:100%;
+    height:2.5em;
+    line-height:2.5em;
+    padding-left:1em;
+    padding-right:1em;
+     border-top: 1px solid #e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
+    }
+    .lable .name
+    {
+        position:absolute;
+        right:1em;
+        top:0.75em;
+        display:block;
+        width:1em;
+    }
+    .lable .name .goright
+    {
+     width:60%;  
+    }
+    .lable .libott
+    {
+        overflow:hidden;
+        display:block;
+        margin-left:1em;
+        margin-right:1em;
+        padding-top:1em;
+          padding-bottom:1em;
+    }
+    .lable .libott ul li
+    {
+           height: 2em;
+          line-height: 2em;
+          
+    }
+    .lable .libott ul li span
+    {
+        padding-left:0.5em;
+        float:right;
+    }

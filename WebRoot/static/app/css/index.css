@@ -1,0 +1,288 @@
+﻿@charset "utf-8";
+/* CSS Document */
+.logo_box{
+	padding:120px 0 0;
+	text-align: center;
+}
+.logo_box h1{margin-bottom:15px;}
+.logo_box h1 img{margin:0 auto;}
+.login_tb{
+	padding:0 .2rem 10px;
+}
+.login_tb table{width:100%;display:block;}
+.login_tb table tbody{width:100%;display:block;}
+.login_tb table tr{width:100%;line-height:.5rem;display:block;padding:.15rem 0;height:.8rem;overflow:hidden;}
+.login_tb table td{
+	width:20%;
+	float:left;
+	text-align: right;
+}
+.login_tb table th{
+	width:80%;
+	float:left;
+	height:.5rem;
+}
+.login_tb table th input{
+	border-bottom:1px solid #ddd;
+	height:.5rem;
+	width:80%;
+	background:0 none;
+	outline: none;
+	font-size: .3rem;
+}
+.reme{padding:0 .5rem;overflow:hidden;font-size: .24rem;}
+.reme .left{
+	width:40%;
+	float:left;
+	padding-left:.3rem;box-sizing: border-box;
+	position:relative;
+}
+.reme .right{
+	width:60%;
+	float:left;
+	text-align: right;
+}
+.chk_1{
+	height:.24rem;
+	width:.24rem;
+	position:absolute ;
+	left:0; 
+	top:5px;
+
+	border:1px solid #ddd;
+}
+div.in{
+
+	line-height:40px;
+	text-align:center;
+	color:#fff;
+	margin-top:.5rem;
+
+}
+div.login{
+	background:url(../img/btn.png) no-repeat;
+	background-size:cover;
+	height:1rem;line-height:.8rem;
+}
+.copyright{
+	width:100%;
+	text-align: center;
+	margin-top:.3rem;	
+	color:#666;
+	font-size: .24rem;
+}
+section{display:none;}
+section.current{display:block;}
+.ft_div{width:100%;padding-top:.1rem;position:fixed;left:0;bottom:0;background-color:#fff;border:1px solid #ededed;height:3em}
+div.ft_div footer{
+	width:25%;
+	float:left;
+	text-align: center;
+	background:url(../img/line.png) no-repeat;
+	background-position:right center;
+}
+div.ft_div .ft.current{
+	color:#fff;
+}
+.content .top{
+	width:100%;
+	text-align: center;
+	position: fixed;
+	top:0;
+	left:0;
+	background:url(../img/apptop.png) no-repeat;
+	height:3em;
+   line-height:3em;
+    background-size:100%;
+}
+
+.search{
+	padding:10px .3rem;
+	overflow:hidden;
+}
+.search .search_search{
+	height:50px;
+	width:80%;
+	border:1px solid #ddd;
+	border-radius:10px 0 0 10px;
+	float:left;
+	outline:none;
+	font-size:.24rem;
+	font-family: "微软雅黑";
+
+}
+.search .search_btn{
+	width:19%;
+	float:left;
+	height:50px;
+	border:1px solid #ddd;
+	border-radius:0 10px 10px 0;
+	margin-left:-1px;
+	text-align: center;
+}
+.list{
+	padding:.3rem;
+}
+.list_list{
+	padding:0 .3rem;
+	border-bottom:1px solid #ddd;
+}
+.list a{
+	width:100%;
+	font-family: "微软雅黑";
+	color:#666;
+}
+.list_box{
+	padding:1.5rem .3rem 0;
+	overflow:hidden;
+}
+.list_box li{
+	width:48%;
+	text-align: center;
+	border:1px solid #ddd;
+	border-radius:10px;
+	float:left;
+	margin-bottom:.5rem;
+}
+.list_box li a{
+	
+	height:100%;
+	display:block;
+	
+}
+.list_box li a{font-weight:normal;height:100%;display:block;color:#666;font-family: "微软雅黑";
+	
+}
+.list_box li a.one{color:#fff;padding:.3rem;font-size:.3rem;border-radius:10px;background-image: -moz-linear-gradient(top, #03b157, #000); background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #009892), color-stop(1,#03b157)); 
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00FF00', endColorstr='#FF0000', GradientType='0'); }
+.list_box li a.two{color:#fff;padding:.3rem;font-size:.3rem;border-radius:10px;background-image: -moz-linear-gradient(top, #578ec6, #000); 
+background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #1a4b9e), color-stop(1,#588fc6)); 
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00FF00', endColorstr='#FF0000', GradientType='0'); }
+.list_box li.right{float:right;}
+.ft a{width:100%;height:100%;display:block;font-family:"微软雅黑";color:#5d5d5d;font-size:.22rem;}
+.ft.current a{color:#80b84a;} 
+.ft a div{
+	margin-top:-.1rem;}
+	.toubu{
+        font-size:0.9em;
+		padding:.3rem .7rem;
+	}
+	.toubu ul{overflow:hidden;margin:0 auto;}
+	.toubu ul li{
+		width:24%;
+		float:left;
+		border:1px solid #ddd;
+		margin-left:-1px;
+		padding:.1rem 0;
+		text-align: center;
+	}
+	.toubu ul li:nth-of-type(1){
+		margin-left:0;
+		border-radius:5px 0 0 5px;
+	}
+	.toubu ul li:nth-of-type(4){
+		
+		border-radius:0 5px 5px 0 ;
+	}
+	.toubu ul li.current{
+		background:#8ccd5f;
+	}
+	.toubu ul li.current a{
+		color:#fff;
+	}
+	section.neirong{
+		padding:.2rem .5rem;
+	}
+	section.neirong div ul{	
+		border:1px solid #ddd;
+		text-align: center;
+		background:#fff;
+		border-radius:8px;
+	}
+	section.neirong div ul li{
+        font-size:0.9em;
+		padding:.2rem 0;
+		border-bottom:1px solid #ddd;
+	}
+	section.neirong div ul li:nth-last-of-type(1){
+		border-bottom:0 none;
+	}
+	section.neirong div ul li a{
+		width:95%;
+		height:100%;
+		margin:0 auto;
+		display:block;
+		overflow:hidden;
+		text-overflow: ellipsis;
+		white-space:nowrap;
+	}
+	section.neirong{display:none;}
+	section.neirong.current{
+		display:block;
+	}
+	
+	.big_box textarea{
+		width:100%;
+		background:0 none;
+		resize: none;
+		border-bottom:1px solid #ddd;
+		padding:.2rem;
+		box-sizing: border-box;
+		outline:none;
+		font-family: "微软雅黑";
+		color:#999;
+		background:#fff;
+		font-size:.3rem;
+	}
+	.photo{
+		margin-top:.1rem;
+		background:#fff;
+		border-top:1px solid #ddd;
+		border-bottom:1px solid #ddd;
+	}
+	.photo ul{
+		overflow:hidden;
+	}
+	.photo ul li{
+		font-size: 0.9em;
+		text-align: center;
+		width: 16.4%;
+		height: auto;
+		border: 1px dashed #ddd;
+		float: left;
+		margin: 1.5%;
+	}
+	.photo ul li.p{background:url(../img/p.png) no-repeat center center;
+	 background-size:cover;
+		height: 3em;
+		width: 3em;
+	}
+
+        .photo ul li img
+        {
+            height:3.7em;
+            width:100%;
+            display:block;
+        }
+	.photo ul li.jiap{background:url(../img/+.png) no-repeat center center;
+	 background-size:cover;
+		height: 3.7em;
+	}
+	.save{
+		padding:1rem .7rem;
+
+	}
+    .save button
+    {
+        outline: none;
+        display: block;
+        width: 100%;
+        height: 100%;
+        padding-top: .1rem;
+        font-size: .3rem;
+        text-align: center;
+        color: #fff;
+        background: url(../img/btn.png) no-repeat;
+        background-size: 100%;
+        padding-bottom: .2rem;
+    }

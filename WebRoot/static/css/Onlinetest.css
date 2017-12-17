@@ -1,0 +1,110 @@
+body,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,table,th,td,form,fieldset,legend,input,textarea,button,select
+{
+    margin:0;
+    padding:0;
+    font-family:arial;
+}
+body
+{
+    /*padding-left:10%;
+     padding-right:10%;*/
+}
+ul
+{
+    list-style:none;
+}
+.top
+{
+    height:40px;
+    width:100%;
+    background:#f2f2f2;
+    border:1px solid #808080;
+    margin-top:10px;
+}
+.clo li
+{
+    height:100%;
+    float:right;
+    margin-right:20px;
+    line-height:40px;
+}
+.tittle
+{
+    text-align:center;
+    padding-bottom:20px;
+    border-bottom:1px dotted #808080;
+}
+.tittle span
+{
+    padding:10px;
+}
+.smalltittle
+{
+    clear:both;
+}
+.Firsttittle P
+{
+    text-indent:1em;    
+}
+.smalltittle .option
+{
+    overflow:hidden;
+}
+.option li
+{
+    width:50px;
+    float:left;
+}
+.option li input[type="radio"]
+{
+    vertical-align:text-top;
+    margin-top:0;
+}
+.Secondtittle P
+{
+    text-indent:1em; 
+    padding-top:5px;   
+    float:left;
+}
+.Secondtittle select
+{
+    width:50px;
+    height:28px;
+    margin-left:20px;
+}
+.check li
+{
+    width:50px;
+    float:left;
+}
+.check li input[type="checkbox"]
+{
+vertical-align:text-top;
+margin-top:0;
+}
+.smalltittle .check
+{
+    overflow:hidden;
+}
+h4 a
+{
+    color:#333333;
+    text-decoration:none;
+    font-size:14px;
+}
+.bottom
+{
+    height:40px;
+    width:100%;
+    background:#f2f2f2;
+    border:1px solid #808080;
+    margin-top:10px;
+    margin-bottom:30px;
+}
+.bottom .sub li
+{
+    height:100%;
+    float:right;
+    margin-right:20px;
+    line-height:40px;
+}

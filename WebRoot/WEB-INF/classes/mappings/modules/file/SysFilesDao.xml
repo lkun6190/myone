@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.file.dao.SysFilesDao">
+    
+	<sql id="sysFilesColumns">
+		a.id AS "id",
+		a.wjlj AS "wjlj",
+		a.wjbt AS "wjbt",
+		a.wjlx AS "wjlx",
+		a.create_date AS "createDate",
+		a.create_by AS "createBy.id",
+		a.update_by AS "updateBy.id",
+		u2.name as "createBy.name" ,
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.zbid AS "zbid"
+	</sql>
+	
+	<sql id="sysFiles">
+		a.id AS "id",
+		a.wjlj AS "wjlj",
+		a.wjbt AS "wjbt",
+		a.wjlx AS "wjlx",
+		a.create_date AS "createDate",
+		a.create_by AS "createBy.id",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.zbid AS "zbid"
+	</sql>
+	
+	<sql id="sysFilesJoins">
+		 LEFT JOIN sys_user u2 ON u2.id = a.create_by
+	</sql>
+    
+	<select id="get" resultType="SysFiles">
+		SELECT 
+			<include refid="sysFilesColumns"/>
+		FROM sys_files a
+		<include refid="sysFilesJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SysFiles">
+		SELECT 
+			<include refid="sysFilesColumns"/>
+		FROM sys_files a
+		<include refid="sysFilesJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="zbid != null and zbid != ''">
+				AND a.zbid = #{zbid}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="listByAll" resultType="SysFiles">
+		SELECT 
+			<include refid="sysFiles"/>
+		FROM sys_files a
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}  and a.zbid=#{remarks} and a.remarks=#{zbid} 
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SysFiles">
+		SELECT 
+			<include refid="sysFilesColumns"/>
+		FROM sys_files a
+		<include refid="sysFilesJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO sys_files(
+			id,
+			wjlj,
+			wjbt,
+			wjlx,
+			create_date,
+			create_by,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			zbid
+		) VALUES (
+			#{id},
+			#{wjlj},
+			#{wjbt},
+			#{wjlx},
+			#{createDate},
+			#{createBy.id},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{zbid}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE sys_files SET 	
+			wjlj = #{wjlj},
+			wjbt = #{wjbt},
+			wjlx = #{wjlx},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			zbid = #{zbid}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE sys_files SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
