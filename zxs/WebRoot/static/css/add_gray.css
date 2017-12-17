@@ -1,0 +1,208 @@
+@charset "utf-8";
+/* CSS Document */
+
+p.p_top_gray{
+	font-family:'微软雅黑';font-size:24px;color:#272525;margin:0;margin-bottom:6px;padding:0;
+	}
+.tb_top_gray{
+	width:100%;
+	height:40px;
+	display:block;
+	padding:5px 0 7px 10px;
+	box-sizing:border-box;
+	background:#8a8e90;
+	}
+.tb_top_gray tr td{
+	float:left;
+	margin-right:16px;
+	padding-top:3px;
+	
+}
+tr.tb_toptr_gray{width:100%;height:40px;display:block;line-height:35px;box-sizing:border-box;background:#adadaa;margin-top:10px;}
+.top_btn_gray{
+	height: 28px;
+	width: 70px;
+	line-height:28px;
+	background:0 none;
+	border:0 none;
+	background:url(../static/avatars/search.png);color:#fff;
+	border-radius:19px;
+	margin-left:20px;
+	text-align:center;
+	margin-top:-5px;
+	}
+.tb_top_gray i.name_gray{
+	font-style:normal;color:#fff;
+	float:left;
+	line-height:23px;
+	margin-right:10px;
+	}
+.tb_top_gray input.input_gray{
+		width:170px;
+		height:25px;
+		padding:0;
+		margin:0;
+		float:left;
+		}
+a.a_gray{
+	background:0 none;
+	color:#fff;
+	}	
+	
+ .role_dist_gray{
+	margin:10px auto;
+	width:135px;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	background:#4f75a0;
+	color:#fff;
+	font-weight:normal;
+	font-size:16px;
+	border-radius:10px;
+	}	
+input.role_dist_gray{
+	display:block;
+	margin:20px auto;
+	padding:0 20px;
+	height:35px;
+	line-height:35px;
+	text-align:center;
+	background:#4f75a0;
+	color:#fff;
+	font-weight:normal;
+	font-size:16px;
+	border-radius:5px;
+	}	
+
+ .ui-widget-content li{
+	/*width:130px;
+	height:30px;
+	line-height:30px;*/
+	text-align:center;
+	border:1px solid #999;
+	border-radius:10px;
+	margin:10px auto;
+	font-size:14px;
+	 }
+.ui-widget-content ol#trash{padding:0;}
+.tr_th th,.tr_th td{text-align: center;}
+
+	.Mail_list{width:100%;
+	height:40px;
+	display:block;
+	box-sizing:border-box;
+	background:#828074;
+	padding-left:10px;}
+
+
+	.Mail_listss{float:left;
+	color:#fff;
+	height:40px;
+	line-height:40px;
+	margin-right:30px;
+	font-size:14px;
+	cursor:pointer;}
+	.show_gray_form{
+		height:400px;
+		padding:100px 3%;
+		border-right:1px solid #ccc;
+		box-sizing:
+		border-box;
+		float:left;
+	}
+	.show_gray_btn{
+		width:80%;height:30px;margin:0 auto;
+		}
+
+
+	table.table_edit_gray{
+				width:60%;display:block;margin:0 auto;margin-bottom:40px;overflow:hidden;border:1px solid #ccc;
+			}
+			.table_edit_gray tr{
+				width:100%;
+				float:left;
+				border-bottom:1px solid #ccc;
+				overflow:hidden;
+			}
+			.table_edit_gray tr td{
+				width:84%;
+				
+				line-height:35px;
+				float:left;
+				/*border-right:1px solid #ccc;*/
+			}
+			.table_edit_gray tr td input{
+				margin:0;
+				padding:0;
+				height:35px;
+				border:0 none;
+				
+			}
+			.table_edit_gray tr th{
+				
+				line-height:35px;
+				height:37px;
+				width:15%;
+				text-align: center;
+				float:left;
+				border-right:1px solid #ccc;
+				background:#f1f1f1;
+			color:#7c7c7c;
+			}
+		
+		.table_edit_gray tr.table_tr_t td{
+			width:34.7%;
+			float:left;
+		}
+		.table_edit_gray tr.table_tr_t td input{width:100%;
+		}
+		.table_edit_gray tr.table_tr_t  th{
+			width:15%;
+			float:left;
+			background:#f1f1f1;
+			color:#7c7c7c;
+		}
+		.table_edit_gray tr.table_tr_t select{
+			height:0;
+			width:100%;
+			height:35px;
+			margin:0;
+			padding:0;
+			border: 0 none;
+
+		}
+		.table_edit_gray textarea,.table_edit_gray input{
+			width:100%;
+			outline: none;
+			resize: none;
+			border:0 none;
+		}
+		.tb_top_btn{
+			width:60%;
+			height:35px;
+			display:block;
+			margin:0 auto;
+			margin-top:30px;
+			background:#ccc;
+			border:1px solid #ccc;
+		}
+		.top_btn_div{
+			width:40%;float:right;overflow:hidden;padding-top:10px;box-sizing: border-box;
+		}
+		.top_btn_div a{
+			float:right;
+		}
+		.gray_btn{
+			height:20px;
+			padding:3px;
+			line-height:20px;
+			background:#08c;
+			float:right;
+			margin:7px 5px 0 0;
+			color:#fff;
+			border-radius: 5px;
+		}
+		.edit_top_p{
+			float:left;line-height:35px;font-weight: bold;
+		}

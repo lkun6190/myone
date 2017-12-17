@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.user.dao.ZxsTotalDao">
+	<sql id="userColumns">
+		a.id as id,
+		a.one_office_num as oneOfficeNum,
+		a.two_office_num as
+		twoOfficeNum,
+		a.three_office_num as threeOfficeNum,
+		a.class_num as
+		classNum,
+		a.stu_num as stuNum,
+		a.tea_num as teaNum,
+		a.user_stu_num as
+		userStuNum,
+		a.user_tea_num as
+		userTeaNum,
+
+		a.flag_stu_num as
+		flagStuNum,
+		a.flag_tea_num as
+		flagTeaNum,
+
+		a.month
+		as month,
+		a.year as
+		year,
+		a.office_id as "office.id"
+	</sql>
+
+	<sql id="userJoins">
+		join sys_office o on o.id=a.office_id
+	</sql>
+
+	<!-- 根据编号获得用户 -->
+	<select id="get" resultType="zxsTotal">
+		select (#{office.id}) "office.id",
+		(select count(id) from sys_office where parent_id=#{office.id} and
+		del_flag!=1) oneOfficeNum,(select count(id) from sys_office where
+		parent_id in(select id from sys_office where parent_id=#{office.id})
+		and del_flag!=1) twoOfficeNum,
+		(select count(id) from sys_office where parent_id in(select id from
+		sys_office where parent_id in(select id from sys_office where
+		parent_id=#{office.id})) and del_flag!=1) threeOfficeNum,
+		(select count(*) from zxs_class a join sys_office o on o.id=a.office_id where
+		a.del_flag!=1 and (o.id = #{office.id} OR o.parent_ids LIKE
+		CONCAT('%,', #{office.id}, ',%'))) classNum,
+		(select count(*) from zxs_tea a join sys_office o on o.id=a.office_id where
+		a.del_flag!=1 and (o.id = #{office.id} OR o.parent_ids LIKE
+		CONCAT('%,', #{office.id}, ',%'))) teaNum,
+		(select count(*) from zxs_stu a join sys_office o on o.id=a.office_id where
+		a.del_flag!=1 and (o.id = #{office.id} OR o.parent_ids LIKE
+		CONCAT('%,', #{office.id}, ',%'))) stuNum,
+		(select count(*) from zxs_tea a join sys_office o on o.id=a.office_id where
+		a.del_flag=0 and (o.id = #{office.id} OR o.parent_ids LIKE
+		CONCAT('%,', #{office.id}, ',%'))) flagTeaNum,
+		(select count(*) from zxs_stu a join sys_office o on o.id=a.office_id where
+		a.del_flag=0 and (o.id = #{office.id} OR o.parent_ids LIKE
+		CONCAT('%,', #{office.id}, ',%'))) flagStuNum,
+		(select count(*) from zxs_tea a join sys_office o on o.id=a.office_id where
+		a.statu=1 and a.del_flag!=1 and (o.id = #{office.id} OR o.parent_ids
+		LIKE CONCAT('%,', #{office.id}, ',%'))) onlineTeaNum,
+		(select count(*) from zxs_stu a join sys_office o on o.id=a.office_id where
+		a.statu=1 and a.del_flag!=1 and (o.id = #{office.id} OR o.parent_ids
+		LIKE CONCAT('%,', #{office.id}, ',%'))) onlineStuNum
+		from dual
+	</select>
+
+
+
+	<select id="getMonth" resultType="zxsTotal">
+		select (#{office.id}) "office.id",
+		(select count(id) from sys_office where parent_id=#{office.id} and
+		del_flag!=1) oneOfficeNum,(select count(id) from sys_office where
+		parent_id in(select id from sys_office where parent_id=#{office.id})
+		and del_flag!=1) twoOfficeNum,
+		(select count(id) from sys_office where parent_id in(select id from
+		sys_office where parent_id in(select id from sys_office where
+		parent_id=#{office.id})) and del_flag!=1) threeOfficeNum,
+		(select count(*) from zxs_class a join sys_office o on o.id=a.office_id where
+		a.del_flag!=1 and (o.id = #{office.id} OR o.parent_ids LIKE CONCAT('%,',
+		#{office.id}, ',%'))) classNum,
+		(select count(*) from zxs_tea a join sys_office o on o.id=a.office_id where
+		a.del_flag!=1 and (o.id = #{office.id} OR o.parent_ids LIKE CONCAT('%,',
+		#{office.id}, ',%'))) teaNum,
+		(select count(*) from zxs_stu a join sys_office o on o.id=a.office_id where
+		a.del_flag!=1 and (o.id = #{office.id} OR o.parent_ids LIKE CONCAT('%,',
+		#{office.id}, ',%'))) stuNum,
+		(select count(*) from zxs_tea a join sys_office o on o.id=a.office_id where
+		a.del_flag=0 and (o.id = #{office.id} OR o.parent_ids LIKE
+		CONCAT('%,', #{office.id}, ',%'))) flagTeaNum,
+		(select count(*) from zxs_stu a join sys_office o on o.id=a.office_id where
+		a.del_flag=0 and (o.id = #{office.id} OR o.parent_ids LIKE
+		CONCAT('%,', #{office.id}, ',%'))) flagStuNum,
+		(select count(*) from zxs_tea a join sys_office o on o.id=a.office_id where
+		a.del_flag!=1 and DATE_FORMAT( last_login_date, '%Y%m' ) =
+		DATE_FORMAT( CURDATE( ) , '%Y%m' ) and (o.id = #{office.id} OR
+		o.parent_ids LIKE CONCAT('%,', #{office.id}, ',%'))) userTeaNum,
+		(select count(*) from zxs_stu a join sys_office o on o.id=a.office_id
+		where a.del_flag!=1 and DATE_FORMAT( last_login_date, '%Y%m' ) =
+		DATE_FORMAT( CURDATE( ) , '%Y%m' ) and (o.id = #{office.id} OR
+		o.parent_ids LIKE CONCAT('%,', #{office.id}, ',%'))) userStuNum
+		from dual
+	</select>
+
+	<!-- 分页查询用户信息 -->
+	<select id="findList" resultType="zxsTotal">
+		SELECT
+		<include refid="userColumns" />
+		FROM zxs_total a
+		<include refid="userJoins" />
+		WHERE 1=1
+		<if test="office != null and office.id != null and office.id != ''">
+			AND o.id = #{office.id}
+		</if>
+		<if test="year != null and year != ''">
+			AND a.year = #{year}
+		</if>
+		<if test="month != null and month != ''">
+			AND a.month = #{month}
+		</if>
+		<!-- 数据范围过滤 -->
+		${sqlMap.dsf}
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+		</choose>
+	</select>
+
+	<!-- 插入用户 -->
+	<insert id="batchSave" useGeneratedKeys="true" parameterType="java.util.List">
+		<selectKey resultType="long" keyProperty="id" order="AFTER">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO zxs_total(
+		id,
+		one_office_num,
+		two_office_num,
+		three_office_num ,
+		class_num ,
+		stu_num ,
+		tea_num ,
+		user_stu_num ,
+		user_tea_num ,
+		flag_stu_num,
+		flag_tea_num ,
+		month,
+		year,
+		office_id
+		)
+		VALUES
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(
+			#{item.id},
+			#{item.oneOfficeNum},
+			#{item.twoOfficeNum},
+			#{item.threeOfficeNum},
+			#{item.classNum},
+			#{item.stuNum},
+			#{item.teaNum},
+			#{item.userStuNum},
+			#{item.userTeaNum},
+			#{item.flagStuNum},
+			#{item.flagTeaNum},
+			#{item.month},
+			#{item.year},
+			#{item.office.id}
+			)
+		</foreach>
+	</insert>
+</mapper>

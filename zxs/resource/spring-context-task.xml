@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+                        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+						http://www.springframework.org/schema/util
+                        http://www.springframework.org/schema/util/spring-util-4.0.xsd
+                        http://www.springframework.org/schema/context  
+                        http://www.springframework.org/schema/context/spring-context-4.0.xsd  
+                        http://www.springframework.org/schema/mvc  
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+                        http://www.springframework.org/schema/task
+                        http://www.springframework.org/schema/task/spring-task-3.0.xsd" default-lazy-init="false">
+
+  
+    <bean id="insertTotalTask" class="com.thinkgem.jeesite.modules.task.InsertTotalTask"></bean>    
+  
+    <task:scheduled-tasks>
+        <!--  
+        	 每天凌晨10分触发00:10:00
+         -->  
+        <!-- <task:scheduled ref="QuerySysAccountTask" method="querySysAccount" 0 0 23 28 * ? cron="0/30 * * * * ?" /> -->
+		<task:scheduled ref="insertTotalTask" method="insertTotal" cron="0 0 23 28 * ?" />
+	
+		<task:scheduled ref="insertTotalTask" method="clearOrderBySort" cron="0 0 0 0/10 * ?" />
+    </task:scheduled-tasks>  
+   
+</beans>

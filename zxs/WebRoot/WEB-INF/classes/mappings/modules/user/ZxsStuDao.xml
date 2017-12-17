@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.user.dao.ZxsStuDao">
+	<sql id="userColumns">
+		i.level as "appPlayInfo.level",
+		i.emp as "appPlayInfo.emp",
+		i.works_level as "appPlayInfo.worksLevel",
+		
+		 case   
+        when i.works_level>=100 then '1'    
+        else '0' END autoLevel,  
+		
+		i.works_emp as
+		"appPlayInfo.worksEmp",
+		i.multi_level as "appPlayInfo.multiLevel",
+		i.multi_emp as "appPlayInfo.multiEmp",
+		i.divis_level as
+		"appPlayInfo.divisLevel",
+		i.divis_emp as "appPlayInfo.divisEmp",
+		i.power_flag as "appPlayInfo.powerFlag",
+		i.therion_flag as
+		"appPlayInfo.therionFlag",
+		i.appgold as "appPlayInfo.gold",
+		i.qinglong_level as
+		"appPlayInfo.qinglongLevel",
+		i.qinglong_emp as
+		"appPlayInfo.qinglongEmp",
+
+		i.qiling_level as
+		"appPlayInfo.qilingLevel",
+		i.qiling_emp as "appPlayInfo.qilingEmp",
+
+		i.xuanwu_level as
+		"appPlayInfo.xuanwuLevel",
+		i.xuanwu_emp as
+		"appPlayInfo.xuanwuEmp",
+
+		i.zhuque_level as
+		"appPlayInfo.zhuqueLevel",
+		i.zhuque_emp as
+		"appPlayInfo.zhuqueEmp",
+
+		i.baihu_level as
+		"appPlayInfo.baihuLevel",
+		i.baihu_emp as
+		"appPlayInfo.baihuEmp",
+
+		i.straw_num as
+		"appPlayInfo.strawNum",
+		i.pear_num as
+		"appPlayInfo.pearNum",
+		i.hamburger_num as "appPlayInfo.hamburgerNum",
+		i.watermelon_num as
+		"appPlayInfo.watermelonNum",
+		i.ba_num as
+		"appPlayInfo.baNum",
+		i.core_score as "appPlayInfo.coreScore",
+		i.five_score as
+		"appPlayInfo.fiveScore",
+		i.tena_score as
+		"appPlayInfo.tenaScore",
+		i.tenm_score as "appPlayInfo.tenmScore",
+		i.multi_score as
+		"appPlayInfo.multiScore",
+		i.divis_score as
+		"appPlayInfo.divisScore",
+		i.pk_am as "appPlayInfo.pkAm",
+		i.pk_multi as
+		"appPlayInfo.pkMulti",
+		i.pk_divis as "appPlayInfo.pkDivis",
+		i.sky_am as
+		"appPlayInfo.skyAm",
+		i.sky_divis as "appPlayInfo.skyDivis",
+		i.sky_multi
+		as
+		"appPlayInfo.skyMulti",
+		i.flash_am as "appPlayInfo.flashAm",
+		i.flash_divis as "appPlayInfo.flashDivis",
+		i.flash_multi as
+		"appPlayInfo.flashMulti",
+		i.ts_am as "appPlayInfo.tsAm",
+		i.ts_multi as
+		"appPlayInfo.tsMulti",
+		i.ts_divis as "appPlayInfo.tsDivis",
+		i.zs_test_score as "appPlayInfo.zsTestScore",
+		i.xs_test_score as
+		"appPlayInfo.xsTestScore",
+		i.zs_score as "appPlayInfo.zsScore",
+		i.xs_score as "appPlayInfo.xsScore",
+		i.lessons_his as
+		"appPlayInfo.lessonsHis",
+		i.auth_level as "appPlayInfo.authLevel",
+		i.contest_flag as "appPlayInfo.contestFlag",
+
+		a.id as id,
+		a.phone,
+		a.stu_no as stuNo,
+		a.pwd as pwd,
+		a.token
+		as token,
+		a.stu_name as stuName,
+		a.gold as gold,
+
+
+
+		floor(datediff(now(),a.birth)/365) as age,
+
+		a.birth as
+		birth,
+		a.no as no,
+		a.email as email,
+		a.is_studied as isStudied,
+		a.studied_name
+		as studiedName,
+		a.payment as payment,
+		a.pay_date as
+		payDate,
+		a.tel as
+		tel,
+		a.last_login_date as lastLoginDate,
+		a.parent_name
+		as parentName,
+		a.parent_tel as
+		parentTel,
+		a.rex as
+		rex,
+		a.address as
+		address,
+		a.sex as sex,
+		a.zhusuanlv as
+		zhusuanlv,
+		a.xinsuanlv as xinsuanlv,
+		a.entry_date as
+		entryDate,
+		a.remarks as
+		remarks,
+		o.id as "office.id",
+		o.name AS
+		"office.name",
+		o.parent_id AS
+		"office.parent.id",
+		o.parent_ids
+		AS
+		"office.parentIds",
+
+		c.id as "zxsClass.id",
+		c.class_no as
+		"zxsClass.classNo",
+		c.class_name as
+		"zxsClass.className",
+
+		a.statu as
+		statu,
+
+		a.create_by AS "createBy.id",
+		a.create_date as createDate,
+		a.update_by AS
+		"updateBy.id",
+		a.update_date
+		as updateDate,
+
+		a.del_flag as
+		delFlag
+	</sql>
+
+	<sql id="userJoins">
+		join sys_office o on o.id=a.office_id
+		join zxs_class c on
+		c.id=a.class_id
+		join app_play_info i on a.id = i.admin_id
+	</sql>
+
+	<!-- 根据编号获得用户 -->
+	<select id="get" resultType="zxsStu">
+		SELECT
+		<include refid="userColumns" />
+		FROM zxs_stu a
+		<include refid="userJoins" />
+		WHERE a.id = #{id} AND a.del_flag != #{DEL_FLAG_DELETE}
+	</select>
+
+	<update id="updateAppInfo">
+		update app_play_info set
+		<if test="level!=null and level!=''">
+			level= #{level},
+		</if>
+		<if test="emp!=null and emp!=''">
+			emp = #{emp},
+		</if>
+		<if test="worksLevel!=null and worksLevel!=''">
+			works_level =#{worksLevel},
+		</if>
+		<if test="worksEmp!=null and worksEmp!=''">
+			works_emp =#{worksEmp},
+		</if>
+		<if test="multiLevel!=null and multiLevel!=''">
+			multi_level =#{multiLevel},
+		</if>
+		<if test="multiEmp!=null and multiEmp!=''">
+			multi_emp =#{multiEmp},
+		</if>
+		<if test="divisLevel!=null and divisLevel!=''">
+			divis_level =#{divisLevel},
+		</if>
+		<if test="divisEmp!=null and divisEmp!=''">
+			divis_emp =#{divisEmp},
+		</if>
+		<if test="powerFlag!=null and powerFlag!=''">
+			power_flag =#{powerFlag},
+		</if>
+
+		<if test="qinglongLevel!=null and qinglongLevel!=''">
+			qinglong_level =#{qinglongLevel},
+		</if>
+		<if test="qinglongEmp!=null and qinglongEmp!=''">
+			qinglong_emp =#{qinglongEmp},
+		</if>
+
+		<if test="qilingLevel!=null and qilingLevel!=''">
+			qiling_level =#{qilingLevel},
+		</if>
+		<if test="qilingEmp!=null and qilingEmp!=''">
+			qiling_emp =#{qilingEmp},
+		</if>
+
+		<if test="xuanwuLevel!=null and xuanwuLevel!=''">
+			xuanwu_level =#{xuanwuLevel},
+		</if>
+		<if test="xuanwuEmp!=null and xuanwuEmp!=''">
+			xuanwu_emp =#{xuanwuEmp},
+		</if>
+		<if test="therionFlag!=null and therionFlag!=''">
+			therion_flag =#{therionFlag},
+		</if>
+		<if test="zhuqueLevel!=null and zhuqueLevel!=''">
+			zhuque_level =#{zhuqueLevel},
+		</if>
+		<if test="zhuqueEmp!=null and zhuqueEmp!=''">
+			zhuque_emp =#{zhuqueEmp},
+		</if>
+
+		<if test="baihuLevel!=null and baihuLevel!=''">
+			baihu_level =#{baihuLevel},
+		</if>
+		<if test="baihuEmp!=null and baihuEmp!=''">
+			baihu_emp =#{baihuEmp},
+		</if>
+
+		<if test="strawNum!=null and strawNum!=''">
+			straw_num =#{strawNum},
+		</if>
+		<if test="pearNum!=null and pearNum!=''">
+			pear_num =#{pearNum},
+		</if>
+		<if test="hamburgerNum!=null and hamburgerNum!=''">
+			hamburger_num =#{hamburgerNum},
+		</if>
+		<if test="watermelonNum!=null and watermelonNum!=''">
+			watermelon_num =#{watermelonNum},
+		</if>
+		<if test="baNum!=null and baNum!=''">
+			ba_num =#{baNum},
+		</if>
+		<if test="coreScore!=null and coreScore!=''">
+			core_score =#{coreScore},
+		</if>
+		<if test="fiveScore!=null and fiveScore!=''">
+			five_score =#{fiveScore},
+		</if>
+		<if test="tenaScore!=null and tenaScore!=''">
+			tena_score = #{tenaScore},
+		</if>
+		<if test="tenmScore!=null and tenmScore!=''">
+			tenm_score =#{tenmScore},
+		</if>
+		<if test="multiScore!=null and multiScore!=''">
+			multi_score =#{multiScore},
+		</if>
+		<if test="divisScore!=null and divisScore!=''">
+			divis_score =#{divisScore},
+		</if>
+		<if test="pkAm!=null and pkAm!=''">
+			pk_am =#{pkAm},
+		</if>
+		<if test="pkMulti!=null and pkMulti!=''">
+			pk_multi =#{pkMulti},
+		</if>
+		<if test="pkDivis!=null and pkDivis!=''">
+			pk_divis =#{pkDivis},
+		</if>
+		<if test="gold!=null and gold!=''">
+			appgold =#{gold},
+		</if>
+		<if test="skyAm!=null and skyAm!=''">
+			sky_am =#{skyAm},
+		</if>
+		<if test="skyDivis!=null and skyDivis!=''">
+			sky_divis =#{skyDivis},
+		</if>
+		<if test="skyMulti!=null and skyMulti!=''">
+			sky_multi =#{skyMulti},
+		</if>
+		<if test="flashAm!=null and flashAm!=''">
+			flash_am =#{flashAm},
+		</if>
+		<if test="flashDivis!=null and flashDivis!=''">
+			flash_divis =#{flashDivis},
+		</if>
+		<if test="flashMulti!=null and flashMulti!=''">
+			flash_multi =#{flashMulti},
+		</if>
+		<if test="tsAm!=null and tsAm!=''">
+			ts_am =#{tsAm},
+		</if>
+		<if test="tsMulti!=null and tsMulti!=''">
+			ts_multi=#{tsMulti},
+		</if>
+		<if test="tsDivis!=null and tsDivis!=''">
+			ts_divis =#{tsDivis},
+		</if>
+		<if test="zsTestScore!=null and zsTestScore!=''">
+			zs_test_score =#{zsTestScore},
+		</if>
+		<if test="xsTestScore!=null and xsTestScore!=''">
+			xs_test_score =#{xsTestScore},
+		</if>
+		<if test="zsScore!=null and zsScore!=''">
+			zs_score =#{zsScore},
+		</if>
+		<if test="xsScore!=null and xsScore!=''">
+			xs_score =#{xsScore},
+		</if>
+		<if test="lessonsHis!=null and lessonsHis!=''">
+			lessons_his =#{lessonsHis},
+		</if>
+		<if test="authLevel!=null and authLevel!=''">
+			auth_level =#{authLevel},
+		</if>
+		<if test="contestFlag!=null and contestFlag!=''">
+			contest_flag= #{contestFlag},
+		</if>
+		admin_type=#{adminType}
+		where admin_id=#{adminId} and
+		admin_type=#{adminType}
+	</update>
+
+	<!-- 根据编号获得用户 -->
+	<select id="getUserByStuNo" resultType="zxsStu">
+		SELECT
+
+
+		<include refid="userColumns" />
+		FROM zxs_stu a
+		<include refid="userJoins" />
+		WHERE a.stu_no = #{stuNo} AND a.del_flag != #{DEL_FLAG_DELETE}
+	</select>
+
+
+
+
+	<!-- 分页查询用户信息 -->
+	<select id="findList" resultType="zxsStu">
+		SELECT
+		<include refid="userColumns" />
+		FROM zxs_stu a
+		<include refid="userJoins" />
+
+		WHERE a.del_flag != #{DEL_FLAG_DELETE}
+
+
+		<if test="office != null and office.id != null and office.id != ''">
+			AND (o.id = #{office.id} OR o.parent_ids LIKE
+			<if test="dbName == 'oracle'">'%,'||#{office.id}||',%')</if>
+			<if test="dbName == 'mysql'">CONCAT('%,', #{office.id}, ',%'))</if>
+		</if>
+		<if test="zxsClass!=null and zxsClass.id!=null and zxsClass.id!=''">
+			AND a.class_id = #{zxsClass.id}
+		</if>
+
+
+		<if test="zxsClaString != null and zxsClaString != ''">
+			AND a.class_id in
+
+			<foreach collection="zxsClaArr" index="index" item="item"
+				open="(" close=")" separator=",">
+
+				'${item}'
+			</foreach>
+
+		</if>
+		<if test="stuNo != null and stuNo != ''">
+			AND a.stu_no like
+			<if test="dbName == 'oracle'">'%'||#{stuNo}||'%'</if>
+			<if test="dbName == 'mysql'">CONCAT('%', #{stuNo}, '%')</if>
+		</if>
+		<if test="stuName != null and stuName != ''">
+			AND a.stu_name like
+			<if test="dbName == 'oracle'">'%'||#{stuName}||'%'</if>
+			<if test="dbName == 'mysql'">CONCAT('%', #{stuName}, '%')</if>
+		</if>
+
+		<if test="no != null and no != ''">
+			AND a.no like
+			<if test="dbName == 'oracle'">'%'||#{no}||'%'</if>
+			<if test="dbName == 'mysql'">CONCAT('%', #{no}, '%')</if>
+		</if>
+		<if test="tel != null and tel != ''">
+			AND a.tel like
+			<if test="dbName == 'oracle'">'%'||#{tel}||'%'</if>
+			<if test="dbName == 'mysql'">CONCAT('%', #{tel}, '%')</if>
+		</if>
+
+
+
+
+		<!-- 数据范围过滤 -->
+		${sqlMap.dsf}
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+		</choose>
+	</select>
+
+	<!-- 插入用户 -->
+	<insert id="insert">
+		INSERT INTO zxs_stu(
+		id,
+		phone,
+		stu_no,
+		pwd,
+		stu_name,
+		gold,
+		age,
+		birth,
+		no,
+		email,
+		is_studied,
+		studied_name,
+		payment,
+		pay_date,
+		tel,
+		parent_name,
+		parent_tel,
+		rex,
+		address,
+		sex,
+		zhusuanlv,
+		xinsuanlv,
+		entry_date,
+		office_id,
+		class_id,
+
+		remarks,
+
+		create_by,
+		create_date,
+		update_by,
+		update_date,
+		del_flag
+		)
+		VALUES (
+		#{id},
+		#{phone},
+		#{stuNo},
+		#{pwd},
+		#{stuName},
+		#{gold},
+		#{age},
+		#{birth},
+		#{no},
+		#{email},
+		#{isStudied},
+		#{studiedName},
+		#{payment},
+		#{payDate},
+		#{tel},
+		#{parentName},
+		#{parentTel},
+		#{rex},
+		#{address},
+		#{sex},
+		#{zhusuanlv},
+		#{xinsuanlv},
+		#{entryDate},
+		#{office.id},
+		#{zxsClass.id},
+
+		#{remarks},
+		#{createBy.id},
+		#{createDate},
+		#{updateBy.id},
+		#{updateDate},
+		#{delFlag}
+		)
+	</insert>
+	<insert id="insertPlayInfo">
+		insert into app_play_info(id,admin_id,admin_type,works_level)
+		values(#{id},#{id},'1',
+		<choose>
+			<when test="autoLevel==1">
+				'100'
+			</when>
+			<otherwise>
+				'0'
+			</otherwise>
+		</choose>
+		)
+	</insert>
+	<!-- 更新用户 -->
+	<update id="update">
+		UPDATE zxs_stu SET
+		stu_no=#{stuNo},
+		phone=#{phone},
+		pwd=#{pwd},
+		stu_name=#{stuName},
+		gold=#{gold},
+		age=#{age},
+		birth=#{birth},
+		no=#{no},
+		email=#{email},
+		is_studied=#{isStudied},
+		studied_name=#{studiedName},
+		payment=#{payment},
+		pay_date=#{payDate},
+		tel=#{tel},
+		parent_name=#{parentName},
+		parent_tel=#{parentTel},
+		rex=#{rex},
+		address=#{address},
+		sex=#{sex},
+		remarks=#{remarks},
+		office_id=#{office.id},
+		class_id=#{zxsClass.id},
+		del_flag=#{delFlag},
+		zhusuanlv=#{zhusuanlv},
+		xinsuanlv=#{xinsuanlv},
+		entry_date=#{entryDate},
+		update_by =
+		#{updateBy.id},
+		update_date =
+		#{updateDate}
+		WHERE id
+		= #{id}
+	</update>
+
+	<!-- 逻辑删除用户 -->
+	<update id="delete">
+		UPDATE zxs_stu SET
+		del_flag = #{DEL_FLAG_DELETE}
+		<if test="updateBy!=null and updateBy.id!=null and updateBy.id!=''">
+		,update_by =
+		#{updateBy.id}
+		</if>
+		<if test="updateDate!=null and updateDate!=''">
+		,update_date = #{updateDate}
+		</if>
+		WHERE
+		id = #{id}
+	</update>
+
+	<!-- 逻辑删除班级下的用户 -->
+	<update id="deleteByClass">
+		UPDATE zxs_stu SET
+		del_flag = #{DEL_FLAG_DELETE},
+		statu='0'
+			<if test="updateBy!=null and updateBy.id!=null and updateBy.id!=''">
+		,update_by =
+		#{updateBy.id}
+		</if>
+		<if test="updateDate!=null and updateDate!=''">
+		,update_date = #{updateDate}
+		</if>
+		WHERE
+		class_id = #{id}
+	</update>
+	<update id="stopZxsStu">
+		UPDATE zxs_stu SET
+		<if test="delFlag==2">
+			statu='0',token='',
+		</if>
+		del_flag = #{delFlag}
+		WHERE
+		id =
+		#{id}
+	</update>
+
+	<update id="stopBatchZxsStu">
+		UPDATE zxs_stu SET
+		statu='0',token='',
+		del_flag = '2'
+		WHERE
+		id =
+		#{id}
+	</update>
+
+	<update id="startBatchZxsStu">
+		UPDATE zxs_stu SET
+		del_flag = '0'
+		WHERE
+		id =
+		#{id}
+	</update>
+
+
+	<update id="updateToken">
+		UPDATE zxs_stu SET
+		<if test="token != null and token != ''">
+			token=#{token},
+			last_login_date=#{lastLoginDate},
+		</if>
+		statu=#{statu}
+		WHERE id
+		= #{id}
+	</update>
+
+	<select id="selectAcc" resultType="string">
+		select stu_acc from acc_sign
+		where sign='0' limit 1
+	</select>
+
+	<update id="updateAcc">
+		update acc_sign set sign='1' where stu_acc=#{stuAcc}
+	</update>
+
+	<select id="orderBy" resultType="zxsStu">
+
+		select b.id,b.stu_no as stuNo,b.stu_name as
+		stuName,floor(datediff(now(),b.birth)/365) as age,
+		
+		<if test="id!=null and id==1">
+		a.flash_am as score,
+		</if>
+		<if test="id!=null and id==2">
+		a.flash_multi as score,
+		</if>
+		<if test="id!=null and id==3">
+		a.flash_divis as score,
+		</if>
+		<if test="id!=null and id==4">
+		a.ts_am as score,
+		</if>
+		<if test="id!=null and id==5">
+		a.ts_multi as score,
+		</if>
+		<if test="id!=null and id==6">
+		a.ts_divis as score,
+		</if>
+		s.area as address from zxs_stu b join app_play_info a on
+		a.admin_id=b.id
+		join (select o.id as id,e.name as area from sys_office
+		o join sys_area
+		e on o.area_id=e.id) s on b.office_id=s.id
+		
+		<if test="id!=null and id==1">
+			order by a.flash_am desc
+		</if>
+		<if test="id!=null and id==2">
+			order by a.flash_multi desc
+		</if>
+		<if test="id!=null and id==3">
+			order by a.flash_divis desc
+		</if>
+		<if test="id!=null and id==4">
+			order by a.ts_am desc
+		</if>
+		<if test="id!=null and id==5">
+			order by a.ts_multi desc
+		</if>
+		<if test="id!=null and id==6">
+			order by a.ts_divis desc
+		</if>
+		limit 10;
+	</select>
+	<update id="clearOrderBySort">
+		update app_play_info set flash_am=0,flash_multi=0,flash_divis=0,ts_am=0,ts_multi=0,ts_divis=0
+	</update>
+</mapper>

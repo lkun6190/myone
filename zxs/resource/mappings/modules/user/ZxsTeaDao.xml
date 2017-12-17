@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.user.dao.ZxsTeaDao">
+	<sql id="userColumns">
+		i.level as "appPlayInfo.level",
+		i.emp as "appPlayInfo.emp",
+		i.works_level as
+		"appPlayInfo.worksLevel",
+		case
+		when i.works_level>=100 then '1'
+		else '0' END autoLevel,
+
+		i.works_emp as
+		"appPlayInfo.worksEmp",
+		i.multi_level as "appPlayInfo.multiLevel",
+		i.multi_emp as
+		"appPlayInfo.multiEmp",
+		i.divis_level as
+		"appPlayInfo.divisLevel",
+		i.divis_emp as "appPlayInfo.divisEmp",
+		i.power_flag as
+		"appPlayInfo.powerFlag",
+		i.appgold as
+		"appPlayInfo.gold",
+		i.therion_flag as "appPlayInfo.therionFlag",
+		i.qinglong_level as
+		"appPlayInfo.qinglongLevel",
+		i.qinglong_emp as
+		"appPlayInfo.qinglongEmp",
+
+		i.qiling_level as
+		"appPlayInfo.qilingLevel",
+		i.qiling_emp as "appPlayInfo.qilingEmp",
+
+		i.xuanwu_level as
+		"appPlayInfo.xuanwuLevel",
+		i.xuanwu_emp as
+		"appPlayInfo.xuanwuEmp",
+
+		i.zhuque_level as
+		"appPlayInfo.zhuqueLevel",
+		i.zhuque_emp as
+		"appPlayInfo.zhuqueEmp",
+
+		i.baihu_level as
+		"appPlayInfo.baihuLevel",
+		i.baihu_emp as
+		"appPlayInfo.baihuEmp",
+
+		i.straw_num as
+		"appPlayInfo.strawNum",
+		i.pear_num as
+		"appPlayInfo.pearNum",
+		i.hamburger_num as "appPlayInfo.hamburgerNum",
+		i.watermelon_num as
+		"appPlayInfo.watermelonNum",
+		i.ba_num as
+		"appPlayInfo.baNum",
+		i.core_score as "appPlayInfo.coreScore",
+		i.five_score as
+		"appPlayInfo.fiveScore",
+		i.tena_score as
+		"appPlayInfo.tenaScore",
+		i.tenm_score as "appPlayInfo.tenmScore",
+		i.multi_score as
+		"appPlayInfo.multiScore",
+		i.divis_score as
+		"appPlayInfo.divisScore",
+		i.pk_am as "appPlayInfo.pkAm",
+		i.pk_multi as
+		"appPlayInfo.pkMulti",
+		i.pk_divis as "appPlayInfo.pkDivis",
+		i.sky_am as
+		"appPlayInfo.skyAm",
+		i.sky_divis as "appPlayInfo.skyDivis",
+		i.sky_multi
+		as
+		"appPlayInfo.skyMulti",
+		i.flash_am as "appPlayInfo.flashAm",
+		i.flash_divis as "appPlayInfo.flashDivis",
+		i.flash_multi as
+		"appPlayInfo.flashMulti",
+		i.ts_am as "appPlayInfo.tsAm",
+		i.ts_multi as
+		"appPlayInfo.tsMulti",
+		i.ts_divis as "appPlayInfo.tsDivis",
+		i.zs_test_score as "appPlayInfo.zsTestScore",
+		i.xs_test_score as
+		"appPlayInfo.xsTestScore",
+		i.zs_score as "appPlayInfo.zsScore",
+		i.xs_score as "appPlayInfo.xsScore",
+		i.lessons_his as
+		"appPlayInfo.lessonsHis",
+		i.auth_level as "appPlayInfo.authLevel",
+		i.contest_flag as "appPlayInfo.contestFlag",
+
+		a.id as id,
+		a.phone as
+		phone,
+		a.tea_no as teaNo,
+		a.pwd as pwd,
+		a.tea_name as
+		teaName,
+		floor(datediff(now(),a.birth)/365) as age,
+
+		a.birth as
+		birth,
+		a.tel as tel,
+		a.sex as sex,
+		a.zhusuanlv as
+		zhusuanlv,
+		a.xinsuanlv as
+		xinsuanlv,
+		a.entry_date as
+		entryDate,
+		a.no as
+		no,
+		a.email as
+		email,
+		a.address as address,
+		a.edu as
+		edu,
+		a.token as token,
+		a.statu as
+		statu,
+		a.ex as ex,
+		a.is_studied as
+		isStudied,
+		a.last_login_date as
+		lastLoginDate,
+		a.studied_name as
+		studiedName,
+		a.remarks as remarks,
+		a.create_by AS "createBy.id",
+		a.create_date as
+		createDate,
+		a.update_by AS
+		"updateBy.id",
+		a.update_date
+		as updateDate,
+
+		o.id as "office.id",
+		o.name AS
+		"office.name",
+		o.parent_id
+		AS
+		"office.parent.id",
+		o.parent_ids AS
+		"office.parentIds",
+		a.del_flag as
+		delFlag
+	</sql>
+
+	<sql id="userJoins">
+		join sys_office o on o.id=a.office_id join app_play_info i
+		on a.id = i.admin_id
+	</sql>
+
+	<insert id="insertPlayInfo">
+		insert into app_play_info(id,admin_id,admin_type,works_level)
+		values(#{id},#{id},'2',
+
+		<choose>
+			<when test="autoLevel==1">
+				'100'
+			</when>
+			<otherwise>
+				'0'
+			</otherwise>
+		</choose>
+		)
+	</insert>
+
+	<!-- 根据编号获得用户 -->
+	<select id="getUserByTeaNo" resultType="zxsTea">
+		SELECT
+
+		<include refid="userColumns" />
+		FROM zxs_tea a
+		<include refid="userJoins" />
+		WHERE a.tea_no = #{teaNo} AND a.del_flag != #{DEL_FLAG_DELETE}
+	</select>
+
+	<!-- 根据编号获得用户 -->
+	<select id="get" resultType="zxsTea">
+		SELECT
+		<include refid="userColumns" />
+		FROM zxs_tea a
+		<include refid="userJoins" />
+		WHERE a.id = #{id} AND a.del_flag != #{DEL_FLAG_DELETE}
+	</select>
+
+	<!-- 分页查询用户信息 -->
+	<select id="findList" resultType="zxsTea">
+		SELECT
+		<include refid="userColumns" />
+		FROM zxs_tea a
+		<include refid="userJoins" />
+
+		WHERE a.del_flag != #{DEL_FLAG_DELETE}
+
+
+		<if test="office != null and office.id != null and office.id != ''">
+			AND (o.id = #{office.id} OR o.parent_ids LIKE
+			<if test="dbName == 'oracle'">'%,'||#{office.id}||',%')</if>
+			<if test="dbName == 'mysql'">CONCAT('%,', #{office.id}, ',%'))</if>
+		</if>
+
+		<if test="teaNo != null and teaNo != ''">
+			AND a.tea_no like
+			<if test="dbName == 'oracle'">'%'||#{teaNo}||'%'</if>
+			<if test="dbName == 'mysql'">CONCAT('%', #{teaNo}, '%')</if>
+		</if>
+		<if test="teaName != null and teaName != ''">
+			AND a.tea_name like
+			<if test="dbName == 'oracle'">'%'||#{teaName}||'%'</if>
+			<if test="dbName == 'mysql'">CONCAT('%', #{teaName}, '%')</if>
+		</if>
+
+		<if test="no != null and no != ''">
+			AND a.no like
+			<if test="dbName == 'oracle'">'%'||#{no}||'%'</if>
+			<if test="dbName == 'mysql'">CONCAT('%', #{no}, '%')</if>
+		</if>
+		<if test="tel != null and tel != ''">
+			AND a.tel like
+			<if test="dbName == 'oracle'">'%'||#{tel}||'%'</if>
+			<if test="dbName == 'mysql'">CONCAT('%', #{tel}, '%')</if>
+		</if>
+
+		<!-- 数据范围过滤 -->
+		${sqlMap.dsf}
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+		</choose>
+	</select>
+
+	<!-- 插入用户 -->
+	<insert id="insert">
+		INSERT INTO zxs_tea(
+		id,
+		phone,
+		tea_no,
+		pwd,
+		tea_name,
+		birth,
+		tel,
+		sex,
+		zhusuanlv,
+		xinsuanlv,
+		entry_date,
+		no,
+		email,
+		address,
+		edu,
+		ex,
+		is_studied,
+		studied_name,
+		office_id,
+		create_by,
+		create_date,
+		update_by,
+		update_date,
+		remarks,
+		del_flag
+		) VALUES (
+		#{id},
+		#{phone},
+		#{teaNo},
+		#{pwd},
+		#{teaName},
+		#{birth},
+		#{tel},
+		#{sex},
+		#{zhusuanlv},
+		#{xinsuanlv},
+		#{entryDate},
+		#{no},
+		#{email},
+		#{address},
+		#{edu},
+		#{ex},
+		#{isStudied},
+		#{studiedName},
+		#{office.id},
+		#{createBy.id},
+		#{createDate},
+		#{updateBy.id},
+		#{updateDate},
+		#{remarks},
+		#{delFlag}
+		)
+	</insert>
+
+	<!-- 更新用户 -->
+	<update id="update">
+		UPDATE zxs_tea SET
+		tea_no=#{teaNo},
+		pwd=#{pwd},
+		phone=#{phone},
+		tea_name=#{teaName},
+		birth=#{birth},
+		tel=#{tel},
+		sex=#{sex},
+		zhusuanlv=#{zhusuanlv},
+		xinsuanlv=#{xinsuanlv},
+		entry_date=#{entryDate},
+		no=#{no},
+		email=#{email},
+		del_flag=#{delFlag},
+		address=#{address},
+		edu=#{edu},
+		ex=#{ex},
+		is_studied=#{isStudied},
+		update_by =
+		#{updateBy.id},
+		remarks=#{remarks},
+		update_date =
+		#{updateDate},
+		studied_name=#{studiedName}
+		WHERE id
+		= #{id}
+	</update>
+
+	<!-- 逻辑删除用户 -->
+	<update id="delete">
+		UPDATE zxs_tea SET
+		del_flag = #{DEL_FLAG_DELETE}
+		<if test="updateBy!=null and updateBy.id!=null and updateBy.id!=''">
+			,update_by =
+			#{updateBy.id}
+		</if>
+		<if test="updateDate!=null and updateDate!=''">
+			,update_date = #{updateDate}
+		</if>
+		WHERE
+		id = #{id}
+	</update>
+	<update id="stopZxsTea">
+		UPDATE zxs_tea SET
+
+		<if test="delFlag==2">
+			statu='0',token='',
+		</if>
+
+		del_flag = #{delFlag}
+		WHERE
+		id =
+		#{id}
+	</update>
+
+
+	<update id="stopBatchZxsTea">
+		UPDATE zxs_tea SET
+		statu='0',token='',
+		del_flag = '2'
+		WHERE
+		id =
+		#{id}
+	</update>
+
+	<update id="startBatchZxsTea">
+		UPDATE zxs_tea SET
+		del_flag = '0'
+		WHERE
+		id =
+		#{id}
+	</update>
+
+	<update id="updateToken">
+		UPDATE zxs_tea SET
+		<if test="token != null and token != ''">
+			token=#{token},
+			last_login_date=#{lastLoginDate},
+		</if>
+		statu=#{statu}
+		WHERE id
+		= #{id}
+	</update>
+</mapper>

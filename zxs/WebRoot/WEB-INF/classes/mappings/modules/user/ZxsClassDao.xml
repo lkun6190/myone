@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.user.dao.ZxsClassDao">
+	<sql id="userColumns">
+		a.id as id,
+		a.class_no as classNo,
+		a.class_name as className,
+		a.class_stu_num as classStuNum,
+		a.study_date as studyDate,
+		a.study_time_start as studyTimeStart,
+		a.study_time_end as studyTimeEnd,
+
+		a.create_by AS "createBy.id",
+		a.create_date as createDate,
+		a.update_by
+		AS
+		"updateBy.id",
+		a.update_date as updateDate,
+
+		o.name AS "office.name",
+		o.id as "office.id",
+		o.parent_id AS
+		"office.parent.id",
+		o.parent_ids
+		AS
+		"office.parentIds",
+
+		c.id as "zxsTea.id",
+		c.tea_no as
+		"zxsTea.teaNo",
+		c.tea_name
+		as
+		"zxsTea.teaName",
+
+
+		a.remarks as remarks,
+		a.create_date,
+		a.del_flag
+	</sql>
+
+	<sql id="userJoins">
+		join sys_office o on o.id=a.office_id
+		left join zxs_tea c on
+		c.id=a.tea_id
+	</sql>
+
+	<!-- 根据编号获得用户 -->
+	<select id="get" resultType="zxsClass">
+		SELECT
+		<include refid="userColumns" />
+		FROM zxs_class a
+		<include refid="userJoins" />
+		WHERE a.id = #{id} AND a.del_flag != #{DEL_FLAG_DELETE}
+	</select>
+
+	<select id="checkNo" resultType="zxsClass">
+		SELECT
+		<include refid="userColumns" />
+		FROM zxs_class a
+		<include refid="userJoins" />
+		WHERE
+		a.del_flag != #{DEL_FLAG_DELETE}
+		<if test="classNo!=null and classNo!=''">
+			and class_no=#{classNo}
+		</if>
+		<if test="office!=null and office.id!=null and office.id!=''">
+			and o.id=#{office.id}
+		</if>
+		limit 1
+	</select>
+
+	<!-- 分页查询用户信息 -->
+	<select id="findList" resultType="zxsClass">
+		SELECT
+		<include refid="userColumns" />
+		FROM zxs_class a
+		<include refid="userJoins" />
+
+		WHERE a.del_flag != #{DEL_FLAG_DELETE}
+
+		<if test="zxsTeaIdTemp != null and zxsTeaIdTemp != ''">
+			AND a.tea_id = #{zxsTeaIdTemp}
+		</if>
+
+		<if test="office != null and office.id != null and office.id != ''">
+			AND (o.id = #{office.id} OR o.parent_ids LIKE
+			<if test="dbName == 'oracle'">'%,'||#{office.id}||',%')</if>
+			<if test="dbName == 'mysql'">CONCAT('%,', #{office.id}, ',%'))</if>
+		</if>
+
+		<if test="classNo != null and classNo != ''">
+			AND a.class_no like
+			<if test="dbName == 'oracle'">'%'||#{classNo}||'%'</if>
+			<if test="dbName == 'mysql'">CONCAT('%', #{classNo}, '%')</if>
+		</if>
+		<if test="className != null and className != ''">
+			AND a.class_name like
+			<if test="dbName == 'oracle'">'%'||#{className}||'%'</if>
+			<if test="dbName == 'mysql'">CONCAT('%', #{className}, '%')</if>
+		</if>
+
+		<!-- 数据范围过滤 -->
+		${sqlMap.dsf}
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+		</choose>
+	</select>
+
+	<select id="findTeaList" resultType="zxsTea">
+		SELECT
+		distinct(c.id) as id,c.tea_name as teaName
+		FROM zxs_class a
+		<include refid="userJoins" />
+
+		WHERE a.del_flag != #{DEL_FLAG_DELETE}
+
+		<if test="zxsTeaIdTemp != null and zxsTeaIdTemp != ''">
+			AND a.tea_id = #{zxsTeaIdTemp}
+		</if>
+
+		<if test="office != null and office.id != null and office.id != ''">
+			AND (o.id = #{office.id} OR o.parent_ids LIKE
+			<if test="dbName == 'oracle'">'%,'||#{office.id}||',%')</if>
+			<if test="dbName == 'mysql'">CONCAT('%,', #{office.id}, ',%'))</if>
+		</if>
+
+		<if test="classNo != null and classNo != ''">
+			AND a.class_no like
+			<if test="dbName == 'oracle'">'%'||#{classNo}||'%'</if>
+			<if test="dbName == 'mysql'">CONCAT('%', #{classNo}, '%')</if>
+		</if>
+		<if test="className != null and className != ''">
+			AND a.class_name like
+			<if test="dbName == 'oracle'">'%'||#{className}||'%'</if>
+			<if test="dbName == 'mysql'">CONCAT('%', #{className}, '%')</if>
+		</if>
+		<!-- 数据范围过滤 -->
+		${sqlMap.dsf}
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+		</choose>
+	</select>
+
+	<!-- 插入用户 -->
+	<insert id="insert">
+		INSERT INTO zxs_class(
+		id,
+		class_no,
+		class_name,
+		class_stu_num,
+		study_date,
+		study_time_start,
+		study_time_end,
+		office_id,
+		tea_id,
+		create_by,
+		create_date,
+		update_by,
+		update_date,
+		remarks,
+		del_flag
+		)
+		VALUES (
+		#{id},
+		#{classNo},
+		#{className},
+		#{classStuNum},
+		#{studyDate},
+		#{studyTimeStart},
+		#{studyTimeEnd},
+		#{office.id},
+		#{zxsTea.id},
+		#{createBy.id},
+		#{createDate},
+		#{updateBy.id},
+		#{updateDate},
+		#{remarks},
+		#{delFlag}
+		)
+	</insert>
+
+	<!-- 更新用户 -->
+	<update id="update">
+		UPDATE zxs_class SET
+		class_no=#{classNo},
+		class_name=#{className},
+		class_stu_num=#{classStuNum},
+		study_date=#{studyDate},
+		study_time_start=#{studyTimeStart},
+		study_time_end=#{studyTimeEnd},
+		update_by =
+		#{updateBy.id},
+		remarks=#{remarks},
+		update_date = #{updateDate},
+		tea_id=#{zxsTea.id}
+		WHERE id
+		=
+		#{id}
+	</update>
+
+	<!-- 逻辑删除用户 -->
+	<update id="delete">
+		UPDATE zxs_class SET
+		del_flag = #{DEL_FLAG_DELETE}
+		<if test="updateBy!=null and updateBy.id!=null and updateBy.id!=''">
+		,update_by =
+		#{updateBy.id}
+		</if>
+		<if test="updateDate!=null and updateDate!=''">
+		,update_date = #{updateDate}
+		</if>
+		WHERE
+		id = #{id}
+	</update>
+</mapper>

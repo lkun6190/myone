@@ -1,0 +1,96 @@
+body,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,table,th,td,form,fieldset,legend,input,textarea,button,select
+{
+    margin:0;
+    padding:0;
+    font-size:95%;
+    font-family:arial;
+}
+body
+{
+    padding-left:10%;
+     padding-right:10%;
+}
+ul
+{
+    list-style:none;
+}
+.top
+{
+    height:40px;
+    width:100%;
+    background:#f2f2f2;
+    border:1px solid #808080;
+    margin-top:10px;
+}
+.clo li
+{
+    height:100%;
+    float:right;
+    margin-right:20px;
+    line-height:40px;
+}
+.score
+{
+    text-align:center;
+}
+.score h3
+{
+    margin:0;
+}
+.score h3 .fraction
+{
+    color:red;
+}
+.table
+{
+    border:1px solid #808080;
+}
+.check li input[type="checkbox"]
+{
+vertical-align:text-top;
+margin-top:0;
+}
+.check li
+{
+    width:50px;
+    float:left;
+}
+.table tr td .smalltittle ul
+{
+    clear:both;
+}
+.table tr td .smalltittle p
+{
+    text-indent:1em; 
+    padding-top:5px;   
+    float:left;
+}
+.table tr td  select
+{
+    width:50px;
+    height:28px;
+    margin-left:20px;
+}
+.smalltittle .option
+{
+    overflow:hidden;
+}
+.option li
+{
+    width:50px;
+    float:left;
+}
+.option li input[type="radio"]
+{
+    vertical-align:text-top;
+    margin-top:0;
+}
+.bottom
+{
+    height:40px;
+    width:100%;
+    background:#f2f2f2;
+    border:1px solid #808080;
+    margin-top:10px;
+    margin-bottom:30px;
+}
